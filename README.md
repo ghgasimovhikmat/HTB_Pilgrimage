@@ -1,13 +1,7 @@
 # HTB_Pilgrimage
 
 ## Synopsis
-Pilgrimage is an easy-difficulty Linux machine featuring a web application with an exposed Git repository.  
-Analysing the underlying filesystem and source code reveals the use of a vulnerable version of ImageMagick,  
-which can be used to read arbitrary files on the target by embedding a malicious tEXT chunk into a PNG image.  
-The vulnerability is leveraged to obtain a SQLite database file containing a plaintext password that can be  
-used to SSH into the machine. Enumeration of the running processes reveals a Bash script executed by root  
-that calls a vulnerable version of the Binwalk binary. By creating another malicious PNG, CVE-2022-4510 is  
-leveraged to obtain Remote Code Execution (RCE) as root.
+Pilgrimage is a Linux-based machine rated as easy difficulty, centered around a web application that exposes a Git repository. Upon analyzing the retrieved source code and file structure, a vulnerable version of ImageMagick is discovered—allowing arbitrary file reads by injecting a specially crafted tEXt chunk into a PNG image. This flaw is exploited to extract a SQLite database containing plaintext credentials, which are then used to gain SSH access to the system. Further enumeration uncovers a root-owned Bash script that executes a compromised version of Binwalk. By crafting another malicious PNG, the CVE-2022-4510 vulnerability is exploited to achieve Remote Code Execution (RCE) as root.
 
 ---
 
